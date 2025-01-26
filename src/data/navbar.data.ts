@@ -17,8 +17,8 @@ export const navbarItems: TNavbarItems[] = [
 		url: "/about",
 		title: "About",
 	},
-	{
-		url: "/contact",
-		title: "Contact",
-	},
+	// {
+	// 	url: "/contact",
+	// 	title: "Contact",
+	// },
 ];
