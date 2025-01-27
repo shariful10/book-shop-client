@@ -1,5 +1,5 @@
 export type TLoggedUser = {
-	userId: string;
+	email: string;
 	role: string;
 	iat: number;
 	exp: number;

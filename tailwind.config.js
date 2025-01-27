@@ -50,20 +50,9 @@ export default {
 					4: "hsl(var(--chart-4))",
 					5: "hsl(var(--chart-5))",
 				},
-			},
-			keyframes: {
-				"slide-in": {
-					"0%": { transform: "translateX(100%)" },
-					"100%": { transform: "translateX(0)" },
-				},
-				"slide-out": {
-					"0%": { transform: "translateX(0)" },
-					"100%": { transform: "translateX(100%)" },
-				},
-			},
-			animation: {
-				"slide-in": "slide-in 0.3s ease-in forwards",
-				"slide-out": "slide-out 0.3s ease-out forwards",
+				primaryColor: "#635bff",
+				primaryHover: "#4f47ea",
+				secondaryColor: "#0A2540",
 			},
 		},
 	},
