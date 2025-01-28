@@ -2,14 +2,17 @@ import Cart from "@/components/module/Cart";
 import Container from "@/components/module/Container";
 import { Button } from "@/components/ui/button";
 import { navbarItems } from "@/data/navbar.data";
+import { useCurrentToken } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hook";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import BtnLogout from "./BtnLogout";
 import MobileNavbar from "./MobileNavbar";
 
 const Navbar: React.FC = () => {
 	const navigate = useNavigate();
+	const token = useAppSelector(useCurrentToken);
 
-	const user = false;
 	return (
 		<div className="bg-[#0A2540] relative w-full">
 			<Container className="flex justify-between items-center py-3 text-white relative">
@@ -23,8 +26,10 @@ const Navbar: React.FC = () => {
 				</div>
 				<div className="flex items-center space-x-4">
 					<Cart length={0} className="hidden md:block" />
-					{user ? (
-						<Button className="hidden md:block">Logout</Button>
+					{token ? (
+						<div className="">
+							<BtnLogout />
+						</div>
 					) : (
 						<div className="space-x-4 md:block">
 							<Button

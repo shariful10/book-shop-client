@@ -1,19 +1,56 @@
 import InputField from "@/components/module/form/InputField";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import { setUser } from "@/redux/features/auth/authSlice";
+import { useAppDispatch } from "@/redux/hook";
+import { TLoggedUser, TResponse, TUserResponse } from "@/types";
+import { verifyToken } from "@/utils/verifyToken";
 import React, { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import EyeOpenClose from "./authentication/EyeOpenClose";
 import RightSide from "./authentication/RightSide";
 
 const SignUp: React.FC = () => {
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const [isShow, setIsShow] = useState(false);
+	const [registerUser] = useRegisterMutation();
 	const { register, handleSubmit, reset } = useForm();
 
-	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		console.log(data);
-		reset();
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		const formData = new FormData();
+		formData.append("file", data.image[0]);
+		formData.append("data", JSON.stringify(data));
+		console.log(data.image[0]);
+
+		console.log(Object.fromEntries(formData));
+
+		try {
+			const res = (await registerUser(formData)) as TResponse<TUserResponse>;
+
+			if (res.error) {
+				toast.error(res?.error?.data.message);
+			}
+
+			const user = verifyToken(res?.data?.accessToken as string) as TLoggedUser;
+
+			dispatch(
+				setUser({
+					user: user,
+					token: res.data?.accessToken as string,
+				})
+			);
+
+			toast.success(res.data!.message);
+			reset();
+			navigate("/");
+		} catch (err) {
+			toast.error("Failed to create account!");
+			console.log(err);
+		}
 	};
 
 	return (
@@ -37,6 +74,9 @@ const SignUp: React.FC = () => {
 								{...register("password")}
 							/>
 							<EyeOpenClose isShow={isShow} setIsShow={setIsShow} />
+						</InputField>
+						<InputField name="image" type="image" label="Image">
+							<Input id="image" type="file" {...register("image")} />
 						</InputField>
 						<Button
 							type="submit"

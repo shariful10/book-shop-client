@@ -11,7 +11,7 @@ import { logOut, setUser } from "../features/auth/authSlice";
 import { RootState } from "../store";
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: "book-shop-apis.vercel.app/api",
+	baseUrl: "http://localhost:5000/api",
 	credentials: "include",
 	prepareHeaders: (headers, { getState }) => {
 		const token = (getState() as RootState).auth.token;
@@ -38,13 +38,10 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
 	if (result?.error?.status === 401) {
 		// Send refresh token
-		const res = await fetch(
-			"book-shop-apis.vercel.app/api/auth/refresh-token",
-			{
-				method: "POST",
-				credentials: "include",
-			}
-		);
+		const res = await fetch("http://localhost:5000/api/auth/refresh-token", {
+			method: "POST",
+			credentials: "include",
+		});
 
 		const data = await res.json();
 
