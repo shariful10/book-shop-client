@@ -1,7 +1,7 @@
 import App from "@/App";
 import AllProducts from "@/pages/AllProducts";
 import Cart from "@/pages/Cart";
-import Home from "@/pages/Home";
+import Home from "@/pages/homePage/Home";
 import Login from "@/pages/Login";
 import SignUp from "@/pages/SignUp";
 import { createBrowserRouter } from "react-router-dom";

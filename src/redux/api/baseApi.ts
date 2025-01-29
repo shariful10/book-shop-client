@@ -9,9 +9,10 @@ import {
 import toast from "react-hot-toast";
 import { logOut, setUser } from "../features/auth/authSlice";
 import { RootState } from "../store";
+import { apiUrl } from "@/config";
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: "http://localhost:5000/api",
+	baseUrl: `${apiUrl}/api`,
 	credentials: "include",
 	prepareHeaders: (headers, { getState }) => {
 		const token = (getState() as RootState).auth.token;
@@ -38,7 +39,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
 	if (result?.error?.status === 401) {
 		// Send refresh token
-		const res = await fetch("http://localhost:5000/api/auth/refresh-token", {
+		const res = await fetch(`${apiUrl}/api/auth/refresh-token`, {
 			method: "POST",
 			credentials: "include",
 		});

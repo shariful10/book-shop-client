@@ -23,7 +23,6 @@ const Login: React.FC = () => {
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		try {
 			const res = await login(data).unwrap();
-			console.log(res);
 
 			if (res.error) {
 				toast.error(res?.error?.data.message);

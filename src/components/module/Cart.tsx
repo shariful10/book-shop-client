@@ -17,7 +17,7 @@ const Cart: React.FC<TCartProps> = ({ length, className, ...resProps }) => {
 			})}
 			onClick={() => navigate("/cart")}
 		>
-			<ShoppingCart />
+			<ShoppingCart className="text-primaryColor" />
 			<span className="absolute -top-2 md:-top-3 -right-2 bg-primaryColor px-2 py-0.5 rounded-full text-[10px] md:text-xs">
 				{length}
 			</span>

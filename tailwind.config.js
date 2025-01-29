@@ -50,9 +50,12 @@ export default {
 					4: "hsl(var(--chart-4))",
 					5: "hsl(var(--chart-5))",
 				},
-				primaryColor: "#635bff",
+				primaryColor: "#f07c29",
 				primaryHover: "#4f47ea",
 				secondaryColor: "#0A2540",
+			},
+			backgroundImage: {
+				sliderImage: "url('/slider1.jpg')",
 			},
 		},
 	},
