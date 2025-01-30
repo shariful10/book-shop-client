@@ -7,12 +7,10 @@ import { useGetMeQuery } from "@/redux/features/userManagement/userManagementApi
 import { useAppSelector } from "@/redux/hook";
 import { formattedName } from "@/utils/formattedName";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import BtnLogout from "../navbar/BtnLogout";
 import Logo from "../navbar/Logo";
 
 const DashboardNav: React.FC = () => {
-	const navigate = useNavigate();
 	const token = useAppSelector(useCurrentToken);
 	const user = useAppSelector(selectCurrentUser);
 
