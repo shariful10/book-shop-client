@@ -1,6 +1,11 @@
 import App from "@/App";
+import Dashboard from "@/components/layout/dashboard/Dashboard";
+import ProtectedRoute from "@/components/layout/protectedRoute/ProtectedRoute";
 import AllProducts from "@/pages/AllProducts";
 import Cart from "@/pages/Cart";
+import OrderManagement from "@/pages/dashboard/OrderManagement";
+import ProductManagement from "@/pages/dashboard/ProductManagement";
+import ProfileManagement from "@/pages/dashboard/ProfileManagement";
 import Home from "@/pages/homePage/Home";
 import Login from "@/pages/Login";
 import SignUp from "@/pages/SignUp";
@@ -36,6 +41,28 @@ const router = createBrowserRouter([
 	{
 		path: "/signup",
 		element: <SignUp />,
+	},
+	{
+		path: "/dashboard",
+		element: (
+			<ProtectedRoute>
+				<Dashboard />
+			</ProtectedRoute>
+		),
+		children: [
+			{
+				path: "profile-management",
+				element: <ProfileManagement />,
+			},
+			{
+				path: "product-management",
+				element: <ProductManagement />,
+			},
+			{
+				path: "order-management",
+				element: <OrderManagement />,
+			},
+		],
 	},
 ]);
 

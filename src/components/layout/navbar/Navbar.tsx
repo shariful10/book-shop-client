@@ -6,15 +6,13 @@ import {
 	selectCurrentUser,
 	useCurrentToken,
 } from "@/redux/features/auth/authSlice";
-import { useGetAllUsersQuery } from "@/redux/features/userManagement/userManagementApi";
+import { useGetMeQuery } from "@/redux/features/userManagement/userManagementApi";
 import { useAppSelector } from "@/redux/hook";
-import { TUser } from "@/types";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 // import Avatar from "./Avatar";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formattedName } from "@/utils/formattedName";
-import { AvatarImage } from "@radix-ui/react-avatar";
 import BtnLogout from "./BtnLogout";
 import Logo from "./Logo";
 import MobileNavbar from "./MobileNavbar";
@@ -24,9 +22,7 @@ const Navbar: React.FC = () => {
 	const token = useAppSelector(useCurrentToken);
 	const user = useAppSelector(selectCurrentUser);
 
-	const { data: users } = useGetAllUsersQuery(undefined);
-
-	const currentUser = users?.data?.find((u: TUser) => u.email === user?.email);
+	const { data: me } = useGetMeQuery(user?.email);
 
 	return (
 		<div className=" relative w-full">
@@ -45,11 +41,11 @@ const Navbar: React.FC = () => {
 						<div className="flex items-center space-x-4">
 							<Avatar className="border-2 border-primaryColor object-cover">
 								<AvatarImage
-									src={currentUser ? currentUser?.profileImg : ""}
-									alt={currentUser?.name ?? ""}
+									src={me ? me.data?.profileImg : ""}
+									alt={me?.data?.name ?? ""}
 								/>
 								<AvatarFallback>
-									{currentUser ? formattedName(currentUser?.name) : "N/A"}
+									{me ? formattedName(me.data!.name) : "N/A"}
 								</AvatarFallback>
 							</Avatar>
 							<BtnLogout />
