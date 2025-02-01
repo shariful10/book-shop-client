@@ -39,7 +39,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 	if (result?.error?.status === 401) {
 		// Send refresh token
 		const res = await fetch(
-			`https://book-shop-apis.vercel.app/api/auth/refresh-token`,
+			"https://book-shop-apis.vercel.app/api/auth/refresh-token",
 			{
 				method: "POST",
 				credentials: "include",
