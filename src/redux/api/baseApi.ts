@@ -9,7 +9,6 @@ import {
 import toast from "react-hot-toast";
 import { logOut, setUser } from "../features/auth/authSlice";
 import { RootState } from "../store";
-import { apiUrl } from "@/config";
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: `https://book-shop-apis.vercel.app/api`,
