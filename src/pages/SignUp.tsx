@@ -4,17 +4,17 @@ import { Input } from "@/components/ui/input";
 import { useRegisterMutation } from "@/redux/features/auth/authApi";
 import { setUser } from "@/redux/features/auth/authSlice";
 import { useAppDispatch } from "@/redux/hook";
-import { TLoggedUser, TResponse, TUserResponse } from "@/types";
+import { TResponse, TUser, TUserResponse } from "@/types";
 import { verifyToken } from "@/utils/verifyToken";
 import React, { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import EyeOpenClose from "./authentication/EyeOpenClose";
 import RightSide from "./authentication/RightSide";
 
 const SignUp: React.FC = () => {
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [isShow, setIsShow] = useState(false);
 	const [registerUser] = useRegisterMutation();
@@ -29,24 +29,27 @@ const SignUp: React.FC = () => {
 		console.log(Object.fromEntries(formData));
 
 		try {
-			const res = (await registerUser(formData)) as TResponse<TUserResponse>;
+			const res = (await registerUser(
+				formData
+			).unwrap()) as TResponse<TUserResponse>;
+			console.log("res", res);
 
 			if (res.error) {
-				toast.error(res?.error?.data.message);
+				toast.error(res?.error?.data?.message);
 			}
 
-			const user = verifyToken(res?.data?.accessToken as string) as TLoggedUser;
+			const user = verifyToken(res?.data?.accessToken as string);
 
 			dispatch(
 				setUser({
-					user: user,
+					user: user as TUser,
 					token: res.data?.accessToken as string,
 				})
 			);
 
-			toast.success(res.data!.message);
+			toast.success("User is created successfully!");
 			reset();
-			navigate("/");
+			// navigate("/");
 		} catch (err) {
 			toast.error("Failed to create account!");
 			console.log(err);
