@@ -9,30 +9,26 @@ import { verifyToken } from "@/utils/verifyToken";
 import React, { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EyeOpenClose from "./authentication/EyeOpenClose";
 import RightSide from "./authentication/RightSide";
 
 const SignUp: React.FC = () => {
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [isShow, setIsShow] = useState(false);
-	const [registerUser] = useRegisterMutation();
+	const [registerUser, { isLoading }] = useRegisterMutation();
 	const { register, handleSubmit, reset } = useForm();
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const formData = new FormData();
 		formData.append("file", data.image[0]);
 		formData.append("data", JSON.stringify(data));
-		console.log(data.image[0]);
-
-		console.log(Object.fromEntries(formData));
 
 		try {
 			const res = (await registerUser(
 				formData
 			).unwrap()) as TResponse<TUserResponse>;
-			console.log("res", res);
 
 			if (res.error) {
 				toast.error(res?.error?.data?.message);
@@ -49,7 +45,7 @@ const SignUp: React.FC = () => {
 
 			toast.success("User is created successfully!");
 			reset();
-			// navigate("/");
+			navigate("/");
 		} catch (err) {
 			toast.error("Failed to create account!");
 			console.log(err);
@@ -85,7 +81,7 @@ const SignUp: React.FC = () => {
 							type="submit"
 							className="bg-primaryColor hover:bg-secondaryColor text-white h-10 rounded-[8px]"
 						>
-							Sign Up
+							{isLoading ? "Signing up..." : "Sign Up"}
 						</Button>
 					</form>
 					<p className="text-start">

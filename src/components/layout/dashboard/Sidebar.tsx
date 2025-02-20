@@ -1,13 +1,8 @@
+import { userRole } from "@/constants";
 import { adminPaths, userPaths } from "@/data/sidebar.data";
 import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useAppSelector } from "@/redux/hook";
 import { NavLink } from "react-router-dom";
-
-const userRole = {
-	USER: "user",
-	ADMIN: "admin",
-	SUPER_ADMIN: "superAdmin",
-};
 
 const Sidebar = () => {
 	const user = useAppSelector(selectCurrentUser);
@@ -29,7 +24,7 @@ const Sidebar = () => {
 	}
 
 	return (
-		<div className="sticky top-8">
+		<div className="sticky top-10">
 			<h1 className="ml-5 py-3 text-2xl capitalize font-semibold mb-5">
 				{" "}
 				{user?.role} Dashboard

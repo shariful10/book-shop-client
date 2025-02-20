@@ -7,7 +7,9 @@ const App: React.FC = () => {
 	return (
 		<>
 			<Navbar />
-			<Outlet />
+			<div className="min-h-[calc(100vh-399px)]">
+				<Outlet />
+			</div>
 			<Footer />
 		</>
 	);

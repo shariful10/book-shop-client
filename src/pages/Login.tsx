@@ -18,7 +18,7 @@ const Login: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const [isShow, setIsShow] = useState(false);
 	const { register, handleSubmit, reset } = useForm();
-	const [login] = useLoginMutation();
+	const [login, { isLoading }] = useLoginMutation();
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		try {
@@ -69,7 +69,7 @@ const Login: React.FC = () => {
 							type="submit"
 							className="bg-primaryColor hover:bg-secondaryColor text-white h-10 rounded-[8px]"
 						>
-							Login
+							{isLoading ? "Login..." : "Login"}
 						</Button>
 					</form>
 					<p className="text-start">

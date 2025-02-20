@@ -1,6 +1,7 @@
 import App from "@/App";
 import Dashboard from "@/components/layout/dashboard/Dashboard";
 import ProtectedRoute from "@/components/layout/protectedRoute/ProtectedRoute";
+import AboutUs from "@/pages/AboutUs";
 import AllProducts from "@/pages/AllProducts";
 import Cart from "@/pages/Cart";
 import OrderManagement from "@/pages/dashboard/OrderManagement";
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/about",
-				element: <Home />,
+				element: <AboutUs />,
 			},
 		],
 	},

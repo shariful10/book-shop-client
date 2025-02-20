@@ -1,4 +1,3 @@
-import Cart from "@/components/module/Cart";
 import Container from "@/components/module/Container";
 import { Button } from "@/components/ui/button";
 import { navbarItems } from "@/data/navbar.data";
@@ -10,22 +9,20 @@ import { useGetMeQuery } from "@/redux/features/userManagement/userManagementApi
 import { useAppSelector } from "@/redux/hook";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import Avatar from "./Avatar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { formattedName } from "@/utils/formattedName";
 import BtnLogout from "./BtnLogout";
+import Dropdown from "./Dropdown";
 import Logo from "./Logo";
 import MobileNavbar from "./MobileNavbar";
 
 const Navbar: React.FC = () => {
 	const navigate = useNavigate();
 	const token = useAppSelector(useCurrentToken);
-	const user = useAppSelector(selectCurrentUser);
 
+	const user = useAppSelector(selectCurrentUser);
 	const { data: me } = useGetMeQuery(user?.email);
 
 	return (
-		<div className=" relative w-full">
+		<div className="relative w-full border-b-2 border-b-primaryColor">
 			<Container className="flex justify-between items-center py-3 text-white relative">
 				<Logo />
 				<div className="hidden md:block space-x-4 text-[#222222] font-medium">
@@ -36,18 +33,9 @@ const Navbar: React.FC = () => {
 					))}
 				</div>
 				<div className="flex items-center space-x-4">
-					<Cart length={0} className="hidden md:block" />
 					{token ? (
 						<div className="flex items-center space-x-4">
-							<Avatar className="border-2 border-primaryColor object-cover">
-								<AvatarImage
-									src={me ? me.data?.profileImg : ""}
-									alt={me?.data?.name ?? ""}
-								/>
-								<AvatarFallback>
-									{me ? formattedName(me.data!.name) : "N/A"}
-								</AvatarFallback>
-							</Avatar>
+							{me && <Dropdown />}
 							<BtnLogout />
 						</div>
 					) : (
@@ -67,7 +55,6 @@ const Navbar: React.FC = () => {
 						</div>
 					)}
 					<div className="flex items-center space-x-3 justify-end">
-						<Cart length={0} />
 						<MobileNavbar />
 					</div>
 				</div>
